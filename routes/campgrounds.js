@@ -45,6 +45,7 @@ router.post(
     //   throw new ExpressError("不正なキャンプ場のデータです", 404);
     const campground = new Campground(req.body.campground);
     await campground.save();
+    req.flash("success", "新しいキャンプ場を登録しました");
     res.redirect(`campgrounds/${campground._id}`);
   })
 );
