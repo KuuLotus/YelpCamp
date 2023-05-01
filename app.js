@@ -14,6 +14,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log("MongoDBコネクションOK!!");
@@ -32,6 +33,7 @@ app.set("views", path.join(__dirname, "views"));
 // ミドルウェア
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.render("home");
