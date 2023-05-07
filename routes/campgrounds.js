@@ -31,9 +31,10 @@ router.get("/new", isLoggedIn, (req, res) => {
 router.get(
   "/:id",
   catchAsync(async (req, res) => {
-    const campground = await Campground.findById(req.params.id).populate(
-      "reviews"
-    );
+    const campground = await Campground.findById(req.params.id)
+      .populate("reviews")
+      .populate("author");
+    console.log(campground);
     if (!campground) {
       req.flash("error", "キャンプ場は見つかりませんでした");
       return res.redirect("/campgrounds");
@@ -50,6 +51,7 @@ router.post(
     // if (!req.body.campground)
     //   throw new ExpressError("不正なキャンプ場のデータです", 404);
     const campground = new Campground(req.body.campground);
+    campground.author = req.user._id;
     await campground.save();
     req.flash("success", "新しいキャンプ場を登録しました");
     res.redirect(`campgrounds/${campground._id}`);
