@@ -1,6 +1,7 @@
 const ExpressError = require("./utils/ExpressError");
 const { campgroundSchema, reviewSchema } = require("./schemas");
 const Campground = require("./models/campground");
+const Review = require("./models/campground");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -39,4 +40,14 @@ module.exports.validateReview = (req, res, next) => {
   } else {
     next();
   }
+};
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+  if (!review.author.equals(req.user._id)) {
+    req.flash("error", "そのアクションの権限がありません");
+    return res.redirect(`/campgrounds/${id}`);
+  }
+  next();
 };
