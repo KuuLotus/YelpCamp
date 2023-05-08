@@ -1,4 +1,6 @@
 <% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/stars.css" />
+
 <div class="row">
   <div class="col-6">
     <div class="card mb-3">
@@ -69,10 +71,10 @@
     <div class="card mt-3">
       <div class="card-body">
         <div class="mb-3">
-          <h5 class="card-title">評価：<%= review.rating %></h5>
-          <h6 class="card-subtitle mb-2 text-muted">
-            <%= review.author.username %>
-          </h6>
+          <h5 class="card-title"><%= review.author.username %></h5>
+          <p class="starability-result" data-rating="<%= review.rating %>">
+            評価： <%= review.rating %>
+          </p>
           <p class="card-text">コメント：<%= review.body %></p>
           <% if(currentUser && review.author.equals(currentUser._id)) { %>
           <form
