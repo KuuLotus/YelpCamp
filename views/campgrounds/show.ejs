@@ -32,6 +32,7 @@
     </div>
   </div>
   <div class="col-6">
+    <% if(currentUser) { %>
     <h2>レビュー</h2>
     <form
       action="/campgrounds/<%= campground._id %>/reviews"
@@ -64,6 +65,7 @@
       </div>
       <button class="btn btn-success">投稿する</button>
     </form>
+    <% } %>
     <% for(let review of campground.reviews) { %>
     <div class="card mt-3">
       <div class="card-body">
