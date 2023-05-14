@@ -24,8 +24,13 @@ module.exports.createCampground = async (req, res) => {
   // if (!req.body.campground)
   //   throw new ExpressError("不正なキャンプ場のデータです", 404);
   const campground = new Campground(req.body.campground);
+  campground.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   campground.author = req.user._id;
   await campground.save();
+  console.log(campground);
   req.flash("success", "新しいキャンプ場を登録しました");
   res.redirect(`campgrounds/${campground._id}`);
 };
