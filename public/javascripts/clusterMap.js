@@ -7,7 +7,7 @@ const map = new mapboxgl.Map({
   zoom: 3,
 });
 
-console.log(campgrounds);
+map.addControl(new mapboxgl.NavigationControl());
 
 map.on("load", () => {
   // Add a new source from our GeoJSON data and
@@ -117,3 +117,4 @@ map.on("load", () => {
     map.getCanvas().style.cursor = "";
   });
 });
+
