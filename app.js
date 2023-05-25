@@ -26,7 +26,7 @@ const reviewsRoutes = require("./routes/reviews");
 
 const MongoStore = require("connect-mongo");
 
-const dbUrl = "mongodb://127.0.0.1:27017/yelpCamp";
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelpCamp";
 mongoose
   .connect(dbUrl, {
     useNewUrlParser: true,
@@ -54,10 +54,12 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
+const secret = process.env.SECRET || "mysecret";
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
-    secret: "mysecret",
+    secret,
   },
   touchAfter: 24 * 3600,
 });
@@ -69,7 +71,7 @@ store.on("error", (e) => {
 const sessionConfig = {
   store,
   name: "session",
-  secret: "mysecret",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
