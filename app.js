@@ -23,6 +23,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const userRoutes = require("./routes/users");
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
+// const dbUrl = process.env.DB_URL;
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/yelpCamp", {
